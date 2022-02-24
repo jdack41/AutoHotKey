@@ -112,7 +112,7 @@ $<^a::
 		send_key("!Backspace", "{Alt Up}^{Backspace}{Alt Down}")
 	return
 !Right::
-	GetKeyState, state, Alt
+	GetKeyState, state, Alt,
 	if state = D
 		send_key("!Right","{Alt Up}^{Right}{Alt Down}")
 	return
@@ -122,7 +122,7 @@ $<^a::
 		send_key("!Left","{Alt Up}^{Left}{Alt Down}")
 	return
 !+Right::
-	GetKeyState, state, Alt
+	GetKeyState, state, Alt,
 	if state = D
 		send_key("!Right","{Alt Up}^+{Right}{Alt Down}")
 	return
