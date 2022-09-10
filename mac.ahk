@@ -3,7 +3,7 @@
 ;mac風キーバインド
 ;================================================================
 #InstallKeybdHook
-#UseHook
+
 ;================================================================
 ;関数
 ;================================================================
@@ -57,77 +57,36 @@ send_key(original_key,replace_key)
 ;================================================================
 ;----------------------------------------------------------------
 ;移動系（shiftキーとの同時押し対応）
-;ctrl + n : 下
-;ctrl + p : 上
-;ctrl + f : 右
-;ctrl + b : 左
 ;ctrl + a : Home
 ;ctrl + e : End
 ;----------------------------------------------------------------
-<^n::send_key("^n","{Down}")
-<^+n::send_key("^+n","+{Down}")
-<^p::send_key("^p","{Up}")
-<^+p::send_key("^+p","+{Up}")
-<^f::send_key("^f","{Right}")
-<^+f::send_key("^+f","+{Right}")
-<^b::send_key("^b","{Left}")
-<^+b::send_key("^+b","+{Left}")
 
-$<^a::
-	GetKeyState, state, LCtrl
-	if state = D
-		send_key("^a","{LCtrl Up}{Home}{LCtrl Down}")
-	return
-<^+a::
-	GetKeyState, state, LCtrl, 
-	if state = D
-		send_key("^+a","{LCtrl Up}+{Home}{LCtrl Down}")
-	return
-<^e::
-	GetKeyState, state, LCtrl, 
-	if state = D
-		send_key("^e","{LCtrl Up}{End}{LCtrl Down}")
-	return
-<^+e::
-	GetKeyState, state, LCtrl, 
-	if state = D
-		send_key("^+e","{LCtrl Up}+{End}{LCtrl Down}")
-	return
+$<^a::send_key("^a","{Home}")
+$<^+a::send_key("^+a","+{Home}")
+$<^e::send_key("^e","{End}")
+$<^+e::send_key("^+e","+{End}")
+
 ;----------------------------------------------------------------
 ;編集系
 ;ctrl + h : BackSpace
 ;ctrl + d : Delete
-;ctrl + m : Enter
 ;ctrl + k : カタカナ変換
+;ctrl + j : ひらがな変換
 ;----------------------------------------------------------------
-<^h::send_key("^h","{BS}")
-<^d::send_key("^d","{Del}")
-<^m::send_key("^m","{Return}")
-<^k::send_key("^k","{F7}")
-<^j::send_key("^j","{F6}")
-; >^+v::send_key("^+v","{RWin Down}{v}{RWin Up}")
-!BackSpace::
-	GetKeyState, state, Alt, 
-	if state = D
-		send_key("!Backspace", "{Alt Up}^{Backspace}{Alt Down}")
-	return
-!Right::
-	GetKeyState, state, Alt,
-	if state = D
-		send_key("!Right","{Alt Up}^{Right}{Alt Down}")
-	return
-!Left::
-	GetKeyState, state, Alt, 
-	if state = D
-		send_key("!Left","{Alt Up}^{Left}{Alt Down}")
-	return
-!+Right::
-	GetKeyState, state, Alt,
-	if state = D
-		send_key("!Right","{Alt Up}^+{Right}{Alt Down}")
-	return
-!+Left::
-	GetKeyState, state, Alt, 
-	if state = D
-		send_key("!Left","{Alt Up}^+{Left}{Alt Down}")
-	return
+$<^k::send_key("^k", "{F7}")
+$<^j::send_key("^j", "{F6}")
+$<^h::send_key("^h", "{BS}")
+$<^d::send_key("^d", "{Del}")
+
+
+;----------------------------------------------------------------
+;編集系(Mac like)
+;Alt + 左右で単語移動
+;Alt + Backspaceで単語削除
+;----------------------------------------------------------------
+
+$!BackSpace::send_key("!Backspace", "^{Backspace}")
+$!Right::send_key("!Right","^{Right}")
+$!Left::send_key("!Left","^{Left}")
+$!+Right::send_key("!Right","^+{Right}")
+$!+Left::send_key("!Left","^+{Left}")
